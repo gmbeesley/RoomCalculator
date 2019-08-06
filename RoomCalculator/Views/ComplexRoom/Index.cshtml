@@ -1,0 +1,143 @@
+﻿@model RoomCalculator.Models.ComplexRoom
+
+@{
+    ViewData["Title"] = "Complex Room Calculator";
+}
+
+<h4>
+    Complex Room Calculator
+</h4>
+
+
+<p>
+    Calculate the floor area, total wall area, volume of a room of any size and shape, 
+    and the amount of paint required to paint the walls.
+</p>
+<p>
+    To use this calculator click on the 'Add Wall' button to add the required number of walls, 
+    and enter the length in meters and corner angles of each wall, ensuring that the values entered 
+    form a fully enclosed space. Enter the corner angle of the first wall as if from the last wall of the room.
+</p>
+
+@Html.ValidationMessage("CustomError", "", new { @class = "text-danger" })
+
+<form asp-controller="Home" asp-action="Index" method="post">
+    <div class="form-group">
+        <table>
+            <thead id="tbWallsHd">
+                <tr>
+                    <th>
+                        Corner Angle
+                    </th>
+                    <th>
+                        Wall Length (m)
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="tbWalls">
+                @for (int i = 0; i < Model.Walls.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <input id="Walls_@(i)__Angle" name="Walls[@i].CornerAngle" type='number' step='0.1' value="@Model.Walls[i].CornerAngle" />
+                        </td>
+                        <td>
+                            <input id="Walls_@(i)__Length" name="Walls[@i].Length" type='number' step='0.1' value="@Model.Walls[i].Length" />
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <input id="btnAdd" type="button" value="Add Wall" class="btn btn-primary" />&nbsp;
+        <input id="btnRemove" type="button" value="Remove Wall" class="btn btn-primary" style="display:none" />
+    </div>
+    <br />
+    <div class="row">
+        <label asp-for="Height" class="col-lg-2"></label>
+        <input type="number" step="0.01" asp-for="Height" class="col-lg-2" />m
+    </div>
+    <div class="row">
+        <label asp-for="PaintCoverage" class="col-lg-2"></label>
+        <input type="number" class="col-lg-2" asp-for="PaintCoverage" />m<span class="exponent">2</span>/litre
+    </div>
+    <div class="row">
+        <label asp-for="PaintCoats" class="col-lg-2"></label>
+        <input type="number" class="col-lg-2" asp-for="PaintCoats" />
+    </div>
+    <br />
+    <div class="row">
+        <label asp-for="FloorArea" class="col-lg-2"></label>
+        <input type="number" disabled="disabled" class="col-lg-2" asp-for="FloorArea" />m<span class="exponent">2</span>
+    </div>
+    <div class="row">
+        <label asp-for="Volume" class="col-lg-2"></label>
+        <input type="number" disabled="disabled" class="col-lg-2" asp-for="Volume" />m<span class="exponent">3</span>
+    </div>
+    <div class="row">
+        <label asp-for="WallArea" class="col-lg-2"></label>
+        <input type="number" disabled="disabled" class="col-lg-2" asp-for="WallArea" />m<span class="exponent">2</span>
+    </div>
+    <div class="row">
+        <label asp-for="PaintLitres" class="col-lg-2"></label>
+        <input type="number" disabled="disabled" class="col-lg-2" asp-for="PaintLitres" />litres
+    </div>
+    <div class="row">
+        <input type="submit" value="Submit" asp-action="Index" class="btn btn-primary" />
+    </div>
+</form>
+
+@section scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var rowCount = $('#tbWalls tr').length;
+            if (rowCount == 0) {
+                addRow();
+            }
+            else if (rowCount > 1) {
+                $("#btnRemove").attr("style", 'display:standard');
+            }
+        })
+
+        $(function () {
+            $('#btnAdd').on('click', addRow);
+        })
+
+        function addRow() {
+
+            @{
+                Model.Walls.Add(new Wall());
+            }
+
+            var index = $("#tbWalls").children("tr").length;
+
+            var angleCell = "<td><input id='Walls_" + index + "__Angle' name='Walls[" + index + "].CornerAngle' type='number' step='0.1' value='' /></td>";
+            var lengthCell = "<td><input id='Walls_" + index + "__Length' name='Walls[" + index + "].Length' type='number' step='0.01' value='' /></td>";
+
+            var newRow = "<tr id='trWall" + index + "'>" + angleCell + lengthCell + "</tr>";
+            $("#tbWalls").append(newRow);
+
+            if (index >= 1) {
+                $("#btnRemove").attr("style", 'display:normal');
+            }
+            
+            $("#tbWalls tr:last td:first input").focus();
+        }
+
+        $(function () {
+            $('#btnRemove').on('click', removeRow);
+        })
+
+        function removeRow() {
+            $('#tbWalls tr:last').remove();
+
+            var rowCount = $('#tbWalls tr').length;
+            if (rowCount <= 1) {
+                $("#btnRemove").attr("style", 'display:none');
+            }
+            $("#tbWalls tr:last td:first input").focus();
+        }
+
+    </script>
+}

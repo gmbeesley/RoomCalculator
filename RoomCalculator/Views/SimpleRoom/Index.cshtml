@@ -1,0 +1,61 @@
+﻿@model RoomCalculator.Models.SimpleRoom
+
+
+@{
+    ViewData["Title"] = "Simple Room Calculator";
+}
+
+<h4>
+    Simple Room Calculator
+</h4>
+
+<p>
+    Calculate the floor area, total wall area, volume of a regular rectangular room, and the amount of paint required to paint the walls.
+</p>
+
+<form asp-controller="Home" asp-action="Index" method="post">
+    <div class="form-group">
+        <div class="row">
+            <label asp-for="Length" class="col-lg-2"></label>
+            <input type="number" step="0.01" asp-for="Length" class="col-lg-2" />m
+        </div>
+        <div class="row">
+            <label asp-for="Width" class="col-lg-2"></label>
+            <input type="number" step="0.01" asp-for="Width" class="col-lg-2" />m
+        </div>
+        <div class="row">
+            <label asp-for="Height" class="col-lg-2"></label>
+            <input type="number" step="0.01" asp-for="Height" class="col-lg-2" />m
+        </div>
+        <div class="row">
+            <label asp-for="PaintCoverage" class="col-lg-2"></label>
+            <input type="number" class="col-lg-2" asp-for="PaintCoverage" />m<span class="exponent">2</span>/litre
+        </div>
+        <div class="row">
+            <label asp-for="PaintCoats" class="col-lg-2"></label>
+            <input type="number" class="col-lg-2" asp-for="PaintCoats" />
+        </div>
+        <br />
+        <div class="row">
+            <label asp-for="FloorArea" class="col-lg-2"></label>
+            <input type="number" disabled="disabled" class="col-lg-2" asp-for="FloorArea" />m<span class="exponent">2</span>
+        </div>
+        <div class="row">
+            <label asp-for="Volume" class="col-lg-2"></label>
+            <input type="number" disabled="disabled" class="col-lg-2" asp-for="Volume" />m<span class="exponent">3</span>
+        </div>
+        <div class="row">
+            <label asp-for="WallArea" class="col-lg-2"></label>
+            <input type="number" disabled="disabled" class="col-lg-2" asp-for="WallArea" />m<span class="exponent">2</span>
+        </div>
+        <div class="row">
+            <label asp-for="PaintLitres" class="col-lg-2"></label>
+            <input type="number" disabled="disabled" class="col-lg-2" asp-for="PaintLitres" />litres
+        </div>
+        <div class="row">
+            <input type="submit" value="Submit" asp-action="Index" class="btn btn-primary"/>
+        </div>
+    </div>
+</form>
+
+
