@@ -4,26 +4,45 @@
     ViewData["Title"] = "Complex Room Calculator";
 }
 
-<h4>
-    Complex Room Calculator
-</h4>
-
+<div class="row">
+    <h4>
+        Complex Room Calculator
+    </h4>
+</div>
 
 <p>
-    Calculate the floor area, total wall area, volume of a room of any size and shape, 
+    Calculate the floor area, total wall area, volume of a room of any size and shape,
     and the amount of paint required to paint the walls.
 </p>
 <p>
-    To use this calculator click on the 'Add Wall' button to add the required number of walls, 
-    and enter the length in meters and corner angles of each wall, ensuring that the values entered 
+    To use this calculator click on the 'Add Wall' button to add the required number of walls,
+    and enter the length in meters and corner angles of each wall, ensuring that the values entered
     form a fully enclosed space. Enter the corner angle of the first wall as if from the last wall of the room.
 </p>
 
-@Html.ValidationMessage("CustomError", "", new { @class = "text-danger" })
-
 <form asp-controller="Home" asp-action="Index" method="post">
+    <div class="row">
+        <label asp-for="Height" class="col-lg-2"></label>
+        <input type="number" step="0.01" asp-for="Height" class="col-lg-2" />m
+    </div>
+    <div class="row">
+        <label asp-for="PaintCoverage" class="col-lg-2"></label>
+        <input type="number" class="col-lg-2" asp-for="PaintCoverage" />m<span class="exponent">2</span>/litre
+    </div>
+    <div class="row">
+        <label asp-for="PaintCoats" class="col-lg-2"></label>
+        <input type="number" class="col-lg-2" asp-for="PaintCoats" />
+    </div>
+    <br />
+
     <div class="form-group">
-        <table>
+        <div class="row">
+            <label asp-for="Walls" class="font-weight-bold"></label>
+        </div>
+
+        @Html.ValidationMessage("CustomError", "", new { @class = "text-danger" })
+
+        <table class="table-primary">
             <thead id="tbWallsHd">
                 <tr>
                     <th>
@@ -55,16 +74,7 @@
     </div>
     <br />
     <div class="row">
-        <label asp-for="Height" class="col-lg-2"></label>
-        <input type="number" step="0.01" asp-for="Height" class="col-lg-2" />m
-    </div>
-    <div class="row">
-        <label asp-for="PaintCoverage" class="col-lg-2"></label>
-        <input type="number" class="col-lg-2" asp-for="PaintCoverage" />m<span class="exponent">2</span>/litre
-    </div>
-    <div class="row">
-        <label asp-for="PaintCoats" class="col-lg-2"></label>
-        <input type="number" class="col-lg-2" asp-for="PaintCoats" />
+        <input type="submit" value="Submit" asp-action="Index" class="btn btn-primary" />
     </div>
     <br />
     <div class="row">
@@ -82,9 +92,6 @@
     <div class="row">
         <label asp-for="PaintLitres" class="col-lg-2"></label>
         <input type="number" disabled="disabled" class="col-lg-2" asp-for="PaintLitres" />litres
-    </div>
-    <div class="row">
-        <input type="submit" value="Submit" asp-action="Index" class="btn btn-primary" />
     </div>
 </form>
 
@@ -121,7 +128,7 @@
             if (index >= 1) {
                 $("#btnRemove").attr("style", 'display:normal');
             }
-            
+
             $("#tbWalls tr:last td:first input").focus();
         }
 

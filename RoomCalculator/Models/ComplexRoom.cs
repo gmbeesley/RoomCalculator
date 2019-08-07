@@ -22,6 +22,7 @@ namespace RoomCalculator.Models
         }
 
         [Required]
+        [Display(Name = "Walls", Description = "List of wall lengths and corner angles")]
         public List<Wall> Walls { get; set; }
 
         [Required]

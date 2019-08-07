@@ -5,10 +5,11 @@
     ViewData["Title"] = "Simple Room Calculator";
 }
 
-<h4>
-    Simple Room Calculator
-</h4>
-
+<div class="row">
+    <h4>
+        Simple Room Calculator
+    </h4>
+</div>
 <p>
     Calculate the floor area, total wall area, volume of a regular rectangular room, and the amount of paint required to paint the walls.
 </p>
@@ -37,6 +38,10 @@
         </div>
         <br />
         <div class="row">
+            <input type="submit" value="Submit" asp-action="Index" class="btn btn-primary" />
+        </div>
+        <br />
+        <div class="row">
             <label asp-for="FloorArea" class="col-lg-2"></label>
             <input type="number" disabled="disabled" class="col-lg-2" asp-for="FloorArea" />m<span class="exponent">2</span>
         </div>
@@ -51,9 +56,6 @@
         <div class="row">
             <label asp-for="PaintLitres" class="col-lg-2"></label>
             <input type="number" disabled="disabled" class="col-lg-2" asp-for="PaintLitres" />litres
-        </div>
-        <div class="row">
-            <input type="submit" value="Submit" asp-action="Index" class="btn btn-primary"/>
         </div>
     </div>
 </form>
